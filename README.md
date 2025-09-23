@@ -57,7 +57,7 @@ flowchart LR
 ## 🛠 Tech Stack  
 
 - **Language:** Java 17  
-- **Framework:** Spring Boot 3.x (Spring Security, Spring Data JPA)  
+- **Framework:** Spring Boot 3.5.6 (Spring Security, Spring Data JPA)  
 - **Database:** PostgreSQL (ledger, accounts, audit logs)  
 - **Messaging:** Apache Kafka  
 - **Security:** OAuth2, JWT, RBAC, Resilience4j  
@@ -81,7 +81,7 @@ flowchart LR
 1. **Clone the repository**
    
    ```bash
-   git clone https://github.com/your-username/amurix.git
+   git clone https://github.com/venaldev/amurix.git
    cd amurix
 3. **Build the project**
    
