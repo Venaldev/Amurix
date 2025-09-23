@@ -7,7 +7,7 @@ import lombok.Builder;
 
 @Builder
 public record AccountCreateRequest(
-        @NotNull(message = "AccountID is required")
+        @NotNull(message = "Owner id is required")
         Long ownerId,
         @NotNull(message = "Currency is required")
         @Size(min = 3, max = 3, message = "Currency must be 3-letter code")
