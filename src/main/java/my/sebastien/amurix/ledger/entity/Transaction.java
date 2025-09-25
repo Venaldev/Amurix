@@ -25,7 +25,8 @@ import java.time.Instant;
             @Index(name = "idx_tx_created_at", columnList = "created_at")
         }
 )
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
