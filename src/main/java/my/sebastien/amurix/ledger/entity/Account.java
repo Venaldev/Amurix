@@ -40,7 +40,7 @@ public class Account {
         FROZEN,
         CLOSED
     }
-
+    // Manage timestamps properly and handle defaults
     @PrePersist
     void onCreate() {
         final Instant now = Instant.now();

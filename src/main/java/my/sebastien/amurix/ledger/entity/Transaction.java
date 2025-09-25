@@ -72,6 +72,22 @@ public class Transaction {
         POSTED,
         REJECTED
     }
+    // Manage timestamps properly
+    @PrePersist
+    void onCreate() {
+        final Instant now = Instant.now();
+        this.createdAt = now;
+        this.updatedAt = now;
+
+        if (this.status == null) {
+            this.status = TransactStatus.PENDING; // New request must go through a pending phase
+        }
+    }
+
+    @PreUpdate
+    void onUpdate() {
+        this.updatedAt = Instant.now();
+    }
 
 
 
