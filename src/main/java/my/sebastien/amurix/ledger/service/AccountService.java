@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
+ // TODO: Exception handling
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -35,7 +35,7 @@ public class AccountService {
     @Transactional(readOnly = true)
     public AccountResponse getAcc(Long id) {
         Account acc = accountRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Account now found " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Account not found " + id));
         return toResponse(acc);
     }
     /** List accounts by owner */
