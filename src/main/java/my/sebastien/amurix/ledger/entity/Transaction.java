@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 
 /**
- * Created indexes to decrease loading times during scale
+ * Created indexes and constraints to decrease loading times during scale
  * Make sure transactions are always unique!
  */
 @Entity
@@ -47,6 +47,7 @@ public class Transaction {
     @Column(nullable = false, precision = 19, scale = 4)
     private BigDecimal amount;
 
+    // Basic check, future can validate against a reference table
     @NotBlank
     @Pattern(regexp = "^[A-Z]{3}$", message = "Currency must be uppercase 3-letter code!")
     @Column(nullable = false, length = 3)
@@ -56,6 +57,11 @@ public class Transaction {
     @Column(nullable = false, length = 16)
     private TransactStatus status;
 
+    /**
+     * When dealing with transactions, we must assure duplicates don't happen
+     *
+     * This key will help identify dupes and reject any requests
+     */
     @NotBlank
     @Column(name = "idemp_key", nullable = false, unique = true, length = 128)
     private String idempKey;
