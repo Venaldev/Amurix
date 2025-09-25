@@ -29,7 +29,7 @@ public class Account {
     @Column(nullable = false, length = 6)
     private Status status;
 
-    @Column(nullable = false, updatable = false) // Never update when an account was created
+    @Column(nullable = false, updatable = false) // Never modify when an account was created
     private Instant createdAt;
 
     @Column(nullable = false)
