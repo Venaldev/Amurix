@@ -9,7 +9,8 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.time.Instant;
 
-// TODO: Indexes for searching the table
+// TODO: More work on uniqueconstraints
+@Entity(name = "LedgerEntry") // JPQL does not want to recognize this in our repo
 @Table(
         name = "ledger_entries",
         indexes = {
