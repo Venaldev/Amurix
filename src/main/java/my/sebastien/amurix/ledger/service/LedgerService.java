@@ -18,6 +18,24 @@ public class LedgerService {
 
     @Transactional
     public void postTransfer(Long fromAccId, Long toAccId, BigDecimal amount, String currency, Long transcId) {
+        // Debit from the sender
+        LedgerEntry debit = LedgerEntry.builder()
+                .accountId(fromAccId)
+                .transactionId(transcId)
+                .direction(LedgerEntry.Direction.DEBIT)
+                .currency(currency)
+                .amount(amount)
+                .build();
+        entryService.save(debit);
 
+        // Credit the receiver
+        LedgerEntry credit = LedgerEntry.builder()
+                .accountId(toAccId)
+                .transactionId(transcId)
+                .direction(LedgerEntry.Direction.CREDIT)
+                .amount(amount)
+                .currency(currency)
+                .build();
+        entryService.save(credit);
     }
 }
