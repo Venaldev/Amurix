@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
+
 @Tag(name = "Ledger Entries", description = "Read-only views of ledger lines, test")
 @RestController
 @RequestMapping("/ledger/entries")
@@ -37,8 +39,30 @@ public class LedgerEntryController {
     @GetMapping("account/{accountId}")
     public Page<LedgerEntryResponse> listByAcc(
             @Parameter(description = "The account id to filter by") @PathVariable Long accountId,
-            @Parameter(description = "Paging and sorting")Pageable pageable
+            @Parameter(description = "Paging and sorting") Pageable pageable
             ) {
         return entryService.listByAccount(accountId, pageable);
+    }
+
+    @Operation(
+            summary = "List ledger entries for a transaction",
+            description = "To fetch both lines (DEBIT, CREDIT) for a specific txn",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "OK",
+                    content = @Content(schema = @Schema(implementation = LedgerEntryResponse.class)))
+            }
+    )
+    @GetMapping("/transaction/{transactionId}")
+    public Page<LedgerEntryResponse> listByTransaction(@PathVariable Long transactionId, Pageable pageable) {
+        return entryService.listByTransaction(transactionId, pageable);
+    }
+    @Operation(
+            summary = "Get current balance for an account",
+            description = "Computes balance  sum of (Credit - debit) from all ledger entries.",
+            responses = { @ApiResponse(responseCode = "200", description = "OK") }
+    )
+    @GetMapping("/account/{accountId}/balance")
+    public BigDecimal balanceOf(@PathVariable Long accountId) {
+        return entryService.balanceOf(accountId);
     }
 }
