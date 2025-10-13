@@ -22,7 +22,7 @@ public class TransactionController {
 
     private final TransactionService transactionService;
 
-    @Operation(
+  /*  @Operation(
             summary = "Create an idempotent transfer",
             description = "Debits the sender and credits the receiver and provide unique idempotency key",
             responses = {
@@ -30,12 +30,32 @@ public class TransactionController {
                             content = @Content(schema = @Schema(implementation = TransactionResponse.class))
                     )
             }
-    )
-
-    @PostMapping
+    )*/
+    // TODO: Create and post method in our transaction service
+   /* @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public TransactionResponse create(@Valid @RequestBody TransferRequest transferRequest) {
+        return toResponse()
+    }
+    */
 
+    @Operation(summary = "Get a transaction by ID")
+    @GetMapping("/{id}")
+    public TransactionResponse get(@PathVariable Long id) {
+        return toResponse(transactionService.get(id));
+    }
+    private TransactionResponse toResponse(Transaction transaction) {
+        return TransactionResponse.builder()
+                .id(transaction.getId())
+                .fromAccountId(transaction.getFromAccountId())
+                .toAcccountId(transaction.getToAccountId())
+                .amount(transaction.getAmount())
+                .currency(transaction.getCurrency())
+                .idempotencyKey(transaction.getIdempKey())
+                .status(transaction.getStatus())
+                .createdAt(transaction.getCreatedAt())
+                .updatedAt(transaction.getUpdatedAt())
+                .build();
     }
 
 }

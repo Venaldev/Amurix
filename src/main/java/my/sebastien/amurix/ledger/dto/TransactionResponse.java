@@ -1,10 +1,13 @@
 package my.sebastien.amurix.ledger.dto;
 
+import lombok.Builder;
 import my.sebastien.amurix.ledger.entity.Account;
+import my.sebastien.amurix.ledger.entity.Transaction;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 
+@Builder
 public record TransactionResponse(
         Long id,
         Long fromAccountId,
@@ -12,7 +15,7 @@ public record TransactionResponse(
         BigDecimal amount,
         String currency,
         String idempotencyKey,
-        Account.Status status,
+        Transaction.TransactStatus status,
         Instant createdAt,
         Instant updatedAt
 ) { }
